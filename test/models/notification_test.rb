@@ -74,7 +74,7 @@ class NotificationTest < ActiveSupport::TestCase
   end
 
   test 'update_from_api_response updates attributes' do
-    stub_fetch_subject_enabled(value: false)
+    stub_display_subject_enabled(value: false)
     api_response = notifications_from_fixture('morty_notifications.json').first
     notification = create(:morty_updated)
     expected_attributes = notification.attributes.merge(
@@ -92,7 +92,7 @@ class NotificationTest < ActiveSupport::TestCase
   end
 
   test 'update_from_api_response updates attributes on a new notification' do
-    stub_fetch_subject_enabled(value: false)
+    stub_display_subject_enabled(value: false)
     user = create(:morty)
     expected_attributes = {
       user_id: user.id,
@@ -119,7 +119,7 @@ class NotificationTest < ActiveSupport::TestCase
   end
 
   test 'update_from_api_response does not create a subject when fetch_subject is disabled' do
-    stub_fetch_subject_enabled(value: false)
+    stub_display_subject_enabled(value: false)
 
     user = create(:user)
     api_response = notifications_from_fixture('morty_notifications.json').second
@@ -130,7 +130,7 @@ class NotificationTest < ActiveSupport::TestCase
   end
 
   test 'update_from_api_response creates a subject when fetch_subject is enabled' do
-    stub_fetch_subject_enabled
+    stub_display_subject_enabled
     stub_repository_request
     url = 'https://api.github.com/repos/octobox/octobox/issues/560'
     response = { status: 200, body: file_fixture('open_issue.json'), headers: { 'Content-Type' => 'application/json' } }
@@ -148,7 +148,7 @@ class NotificationTest < ActiveSupport::TestCase
   end
 
   test 'update_from_api_response does not update the subject if the subject was recently updated' do
-    stub_fetch_subject_enabled
+    stub_display_subject_enabled
     stub_repository_request
     url = 'https://api.github.com/repos/octobox/octobox/issues/560'
 
@@ -163,7 +163,7 @@ class NotificationTest < ActiveSupport::TestCase
   end
 
   test 'update_from_api_response updates the subject if the subject was not recently updated' do
-    stub_fetch_subject_enabled
+    stub_display_subject_enabled
     stub_repository_request
     url = 'https://api.github.com/repos/octobox/octobox/issues/560'
     response = { status: 200, body: file_fixture('open_issue.json'), headers: { 'Content-Type' => 'application/json' } }
@@ -214,7 +214,7 @@ class NotificationTest < ActiveSupport::TestCase
   end
 
   test 'updated_from_api_response updates the existing subject if present' do
-    stub_fetch_subject_enabled
+    stub_display_subject_enabled
     stub_repository_request
     url = 'https://api.github.com/repos/octobox/octobox/pulls/403'
     response = { status: 200, body: file_fixture('merged_pull_request.json'), headers: { 'Content-Type' => 'application/json' } }

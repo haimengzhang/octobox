@@ -3,6 +3,7 @@ require 'test_helper'
 
 class SessionsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    Octobox.config.stubs(:github_app).returns(false)
     @notifications_request = stub_notifications_request(body: '[]')
     @user = create(:user)
   end

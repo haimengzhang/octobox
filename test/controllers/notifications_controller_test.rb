@@ -3,7 +3,8 @@ require 'test_helper'
 
 class NotificationsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    stub_fetch_subject_enabled(value: false)
+    Octobox.config.stubs(:github_app).returns(false)
+    stub_display_subject_enabled(value: false)
     stub_notifications_request
     stub_repository_request
     @user = create(:user)
@@ -111,7 +112,8 @@ class NotificationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'renders notifications filtered by label' do
-    stub_fetch_subject_enabled
+    stub_display_subject_enabled
+    Octobox.config.stubs(:github_app).returns(false)
     sign_in_as(@user)
 
     get '/'

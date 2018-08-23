@@ -3,7 +3,7 @@ require 'test_helper'
 class TasksTest < ActiveSupport::TestCase
   setup do
     stub_notifications_request
-    stub_fetch_subject_enabled(value: false)
+    stub_display_subject_enabled(value: false)
   end
 
   test 'fetches notifications' do
